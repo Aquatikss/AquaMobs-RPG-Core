@@ -1,0 +1,30 @@
+name: RPGCore
+version: '1.0-SNAPSHOT'
+main: com.aquaMobs.rpgCore.Main
+api-version: '1.21'
+softdepend: [ Vault ]
+authors: [ Aquatikss ]
+description: The AquaMobs RPG-Core Plugin
+website: store.aquamobs.com
+commands:
+  item:
+    description: "§cSets an item to the given value and saves it to the configuration."
+    usage: "§cIncorrect Usage! §8( /§item §8[ §f get§8 /§f set§8 /§f delete §8] §8[§f identifier §8] )"
+    aliases: [ i, items ]
+    permission: aquamobs.items
+    permission-message: "§cYou do not have permission to execute that command!"
+  stats:
+    description: "§cSets a stat of a player to the given value."
+    usage: "§cIncorrect Usage! §8( /§fstats §8[ §f get§8 /§f set§8 /§f delete §8] [§f stat §8] §8[§f value §8] )"
+    aliases: [ st ]
+    permission: aquamobs.staff.stats
+    permission-message: "§cYou do not have permission to execute that command!"
+  itemstats:
+    description: "§cSets a stat of a player to the given value."
+    usage: "§cIncorrect Usage! §8( /§fitemstats §8[ §f get§8 /§f set§8 /§f delete §8] [§f stat §8] [§f type §8] [§f value §8] )"
+    aliases: [ ist, is ]
+    permission: aquamobs.staff.stats
+    permission-message: "§cYou do not have permission to execute that command!"
+  spawn:
+    description: "§cTeleports you to spawn."
+    usage: "§cIncorrect Usage! §8( /§fspawn §8)"

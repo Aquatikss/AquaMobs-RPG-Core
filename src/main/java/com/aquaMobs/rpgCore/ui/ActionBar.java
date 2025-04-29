@@ -39,40 +39,38 @@ public class ActionBar {
                 currentSkillXpRequired = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "combat_xprequired"), PersistentDataType.INTEGER);
                 currentSkillLevel = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "combat_level"), PersistentDataType.INTEGER);
 
-                skillDisplayText = "<yellow>[ <red>\uD83D\uDDE1 <white>Combat " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp/currentSkillXpRequired)*100)) + "% <dark_gray>) <yellow>]";
+                skillDisplayText = "<yellow>[ <red>\uD83D\uDDE1 <white>Combat " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp / currentSkillXpRequired) * 100)) + "% <dark_gray>) <yellow>]";
                 break;
             case "farming":
                 currentSkillXp = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "farming_xp"), PersistentDataType.INTEGER);
                 currentSkillXpRequired = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "farming_xprequired"), PersistentDataType.INTEGER);
                 currentSkillLevel = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "farming_level"), PersistentDataType.INTEGER);
 
-                skillDisplayText = "<yellow>[ <yellow>\uD83D\uDD31 <white>Farming " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp/currentSkillXpRequired)*100)) + "% <dark_gray>) <yellow>]";
+                skillDisplayText = "<yellow>[ <yellow>\uD83D\uDD31 <white>Farming " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp / currentSkillXpRequired) * 100)) + "% <dark_gray>) <yellow>]";
                 break;
             case "fishing":
                 currentSkillXp = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "fishing_xp"), PersistentDataType.INTEGER);
                 currentSkillXpRequired = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "fishing_xprequired"), PersistentDataType.INTEGER);
                 currentSkillLevel = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "fishing_level"), PersistentDataType.INTEGER);
 
-                skillDisplayText = "<yellow>[ <aqua>\uD83C\uDFA3 <white>Fishing " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp/currentSkillXpRequired)*100)) + "% <dark_gray>) <yellow>]";
+                skillDisplayText = "<yellow>[ <aqua>\uD83C\uDFA3 <white>Fishing " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp / currentSkillXpRequired) * 100)) + "% <dark_gray>) <yellow>]";
                 break;
             case "foraging":
                 currentSkillXp = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "foraging_xp"), PersistentDataType.INTEGER);
                 currentSkillXpRequired = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "foraging_xprequired"), PersistentDataType.INTEGER);
                 currentSkillLevel = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "foraging_level"), PersistentDataType.INTEGER);
 
-                skillDisplayText = "<yellow>[ <dark_green>\uD83E\uDE93 <white>Foraging " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp/currentSkillXpRequired)*100)) + "% <dark_gray>) <yellow>]";
+                skillDisplayText = "<yellow>[ <dark_green>\uD83E\uDE93 <white>Foraging " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp / currentSkillXpRequired) * 100)) + "% <dark_gray>) <yellow>]";
                 break;
             case "mining":
                 currentSkillXp = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "mining_xp"), PersistentDataType.INTEGER);
                 currentSkillXpRequired = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "mining_xprequired"), PersistentDataType.INTEGER);
                 currentSkillLevel = p.getPersistentDataContainer().get(new NamespacedKey("aquamobs", "mining_level"), PersistentDataType.INTEGER);
 
-                skillDisplayText = "<yellow>[ <dark_gray>⛏ <white>Mining " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp/currentSkillXpRequired)*100)) + "% <dark_gray>) <yellow>]";
+                skillDisplayText = "<yellow>[ <dark_gray>⛏ <white>Mining " + currentSkillLevel + " <dark_gray>(<white>" + df.format((((float) currentSkillXp / currentSkillXpRequired) * 100)) + "% <dark_gray>) <yellow>]";
                 break;
-            case null:
+            case null, default:
                 break;
-            default:
-
         }
 
         if (skillDisplayTime == 0) {

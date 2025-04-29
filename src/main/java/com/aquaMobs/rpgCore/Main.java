@@ -25,11 +25,13 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import net.royawesome.jlibnoise.module.combiner.Min;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.NamespacedKey;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.block.data.Ageable;
 import org.bukkit.block.data.BlockData;
 import org.bukkit.entity.Player;
+import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.checkerframework.checker.nullness.qual.NonNull;
@@ -139,6 +141,7 @@ public final class Main extends JavaPlugin {
 
         for (Player p : Bukkit.getOnlinePlayers()) {
             Sidebar.init(p);
+            p.getPersistentDataContainer().set(new NamespacedKey("aquamobs", "skill_xp_gain_display_time"), PersistentDataType.INTEGER, 0);
         }
 
         new BukkitRunnable() {

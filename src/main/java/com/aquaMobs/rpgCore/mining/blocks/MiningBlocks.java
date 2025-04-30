@@ -10,6 +10,7 @@ import org.bukkit.event.block.BlockBreakEvent;
 import org.bukkit.event.block.BlockDamageEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class MiningBlocks implements Listener {
@@ -19,9 +20,9 @@ public class MiningBlocks implements Listener {
     public static void registerBlocks() {
 
         blocks.add(new CustomMiningBlock(
-                Material.ANDESITE,
+                List.of(Material.ANDESITE, Material.STONE),
                 100f,
-                "mine1",
+                List.of("mine1", "mine3"),
                 1,
                 1,
                 "mining",
@@ -33,9 +34,9 @@ public class MiningBlocks implements Listener {
         ));
 
         blocks.add(new CustomMiningBlock(
-                Material.GRANITE,
+                List.of(Material.GRANITE, Material.DIORITE),
                 50f,
-                "mine1",
+                List.of("mine1", "mine2"),
                 1,
                 1,
                 "mining",
@@ -50,9 +51,8 @@ public class MiningBlocks implements Listener {
     @EventHandler
     public void onMine(BlockDamageEvent e) {
         for (CustomMiningBlock block : blocks) {
-            boolean typeMatch = e.getBlock().getType() == block.getType();
-            boolean regionMatch = RegionUtil.getRegionsAt(e.getBlock().getLocation()).contains(block.getRegionName());
-            e.getPlayer().getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(0.000001);
+            boolean typeMatch = block.getType().contains(e.getBlock().getType());
+            boolean regionMatch = !Collections.disjoint(block.getRegionName(), RegionUtil.getRegionsAt(e.getBlock().getLocation()));
             if (typeMatch && regionMatch) {
                 block.onBlockDamage(e);
                 return;
@@ -64,8 +64,9 @@ public class MiningBlocks implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         for (CustomMiningBlock block : blocks) {
-            e.getPlayer().getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(0.000001);
-            if (e.getBlock().getType() == block.getType() && RegionUtil.getRegionsAt(e.getBlock().getLocation()).contains(block.getRegionName())) {
+            boolean typeMatch = block.getType().contains(e.getBlock().getType());
+            boolean regionMatch = !Collections.disjoint(block.getRegionName(), RegionUtil.getRegionsAt(e.getBlock().getLocation()));
+            if (typeMatch && regionMatch) {
                 block.onBlockBreak(e);
                 return;
             }

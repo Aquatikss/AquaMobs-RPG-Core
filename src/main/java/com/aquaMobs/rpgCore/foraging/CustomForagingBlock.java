@@ -1,10 +1,9 @@
-package com.aquaMobs.rpgCore.mining;
+package com.aquaMobs.rpgCore.foraging;
 
+import com.aquaMobs.rpgCore.Main;
 import com.aquaMobs.rpgCore.items.ConfigUtil;
-import com.aquaMobs.rpgCore.leveling.LevelLoop;
 import com.aquaMobs.rpgCore.leveling.XPGain;
 import com.aquaMobs.rpgCore.misc.RegionUtil;
-import com.aquaMobs.rpgCore.skills.StatsLevelLoop;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.block.Block;
@@ -15,12 +14,13 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-public class CustomMiningBlock {
+public class CustomForagingBlock {
 
     private final float hardness;
     private final List<Material> blockType;
@@ -34,7 +34,7 @@ public class CustomMiningBlock {
     private final int itemAmountRewarded;
     private final int breakingPowerRequired;
 
-    public CustomMiningBlock (List<Material> blockType, float hardness, List<String> regionName, int levelRequired, int skillLevelRequired, String skillName, String itemRewarded, int skillXpAmountRewarded, int xpAmountRewarded, int itemAmountRewarded, int breakingPowerRequired) {
+    public CustomForagingBlock (List<Material> blockType, float hardness, List<String> regionName, int levelRequired, int skillLevelRequired, String skillName, String itemRewarded, int skillXpAmountRewarded, int xpAmountRewarded, int itemAmountRewarded, int breakingPowerRequired) {
         this.blockType = blockType;
         this.hardness = hardness;
         this.regionName = regionName;
@@ -59,28 +59,36 @@ public class CustomMiningBlock {
 
         int skillLevel = pdc.getOrDefault(new NamespacedKey("aquamobs", this.skillName+"_"+"level"), PersistentDataType.INTEGER, 1);
         int breakingPower = pdc.getOrDefault(new NamespacedKey("aquamobs", "breaking_power"), PersistentDataType.INTEGER, 0);
-        int miningSpeed = pdc.getOrDefault(new NamespacedKey("aquamobs", "mining_speed"), PersistentDataType.INTEGER, 0);
+        int foragingSpeed = pdc.getOrDefault(new NamespacedKey("aquamobs", "foraging_speed"), PersistentDataType.INTEGER, 0);
 
         boolean blockIsCorrect = this.blockType.contains(actualBlockType);
         boolean regionIsCorrect = !Collections.disjoint(this.regionName, RegionUtil.getRegionsAt(blockLocation));
         boolean playerHasLevel = p.getLevel() >= this.levelRequired;
         boolean playerHasSkillLevel = skillLevel >= this.skillLevelRequired;
         boolean playerHasBreakingPower = breakingPower >= this.breakingPowerRequired;
-        ItemStack tool = p.getInventory().getItemInMainHand();
 
+        ItemStack tool = p.getInventory().getItemInMainHand();
         int constant = 10;
 
         if (blockIsCorrect && regionIsCorrect && playerHasLevel && playerHasSkillLevel && playerHasBreakingPower) {
             int equality = equality(tool, b);
-            p.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(((miningSpeed/(this.hardness*equality))*constant)+0.000001);
+            double newSpeed = ((foragingSpeed/(this.hardness*equality))*constant)+0.000001;
+            p.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(newSpeed);
         } else if (blockIsCorrect && regionIsCorrect && !playerHasBreakingPower) {
             p.sendMessage("You don't have enough breaking power to break this block!");
-            p.sendMessage("Your current breaking power is "+breakingPower+"/"+this.breakingPowerRequired+"!");
         } else if (blockIsCorrect && regionIsCorrect && !playerHasSkillLevel) {
             p.sendMessage("You don't have enough skill level to break this block!");
         } else if (blockIsCorrect && regionIsCorrect && !playerHasLevel) {
             p.sendMessage("You don't have enough level to break this block!");
         }
+
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                float breakSpeed = b.getBreakSpeed(p);
+                e.getPlayer().sendMessage(breakSpeed + "");
+            }
+        }.runTaskLater(Main.getPlugin(), 1L);
     }
 
     private static int equality(ItemStack tool, Block b) {
@@ -100,10 +108,10 @@ public class CustomMiningBlock {
                 case GOLDEN_AXE, GOLDEN_HOE, GOLDEN_PICKAXE, GOLDEN_SHOVEL, GOLDEN_SWORD:
                     return 1200;
                 default:
-                    break;
+                    return 75;
             }
         }
-        return 1;
+        return 75;
     }
 
     public void onBlockBreak(BlockBreakEvent e) {
@@ -127,7 +135,7 @@ public class CustomMiningBlock {
 
         ItemStack item = (ItemStack) ConfigUtil.getConfig().get("items." + itemRewarded);
 
-        int fortune = pdc.getOrDefault(new NamespacedKey("aquamobs", "mining_fortune"), PersistentDataType.INTEGER, 0);
+        int fortune = pdc.getOrDefault(new NamespacedKey("aquamobs", "foraging_fortune"), PersistentDataType.INTEGER, 0);
 
         Random random = new Random();
 
@@ -160,4 +168,5 @@ public class CustomMiningBlock {
     public List<String> getRegionName() {
         return this.regionName;
     }
+
 }

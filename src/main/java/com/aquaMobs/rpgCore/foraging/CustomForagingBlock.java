@@ -82,13 +82,6 @@ public class CustomForagingBlock {
             p.sendMessage("You don't have enough level to break this block!");
         }
 
-        new BukkitRunnable() {
-            @Override
-            public void run() {
-                float breakSpeed = b.getBreakSpeed(p);
-                e.getPlayer().sendMessage(breakSpeed + "");
-            }
-        }.runTaskLater(Main.getPlugin(), 1L);
     }
 
     private static int equality(ItemStack tool, Block b) {

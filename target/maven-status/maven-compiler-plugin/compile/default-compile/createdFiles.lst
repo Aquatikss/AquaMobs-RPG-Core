@@ -9,7 +9,6 @@ com\aquaMobs\rpgCore\areas\Portals$1.class
 com\aquaMobs\rpgCore\mobs\DamageIndicator.class
 com\aquaMobs\rpgCore\ui\ActionBar.class
 com\aquaMobs\rpgCore\items\ItemUtils.class
-com\aquaMobs\rpgCore\foraging\CustomForagingBlock$2.class
 com\aquaMobs\rpgCore\stats\StatLoop.class
 com\aquaMobs\rpgCore\farming\Regrowable$1.class
 com\aquaMobs\rpgCore\leveling\LevelLoop.class
@@ -26,6 +25,7 @@ com\aquaMobs\rpgCore\stats\Health.class
 com\aquaMobs\rpgCore\foraging\blocks\ForagingBlocks.class
 com\aquaMobs\rpgCore\foraging\CustomForagingBlock.class
 com\aquaMobs\rpgCore\mobs\MobConfigUtil.class
+com\aquaMobs\rpgCore\classes\ClassSelectionMenu.class
 com\aquaMobs\rpgCore\foraging\CustomForagingBlock$1.class
 com\aquaMobs\rpgCore\areas\Portals.class
 com\aquaMobs\rpgCore\leveling\XPGain$1.class
@@ -42,6 +42,7 @@ com\aquaMobs\rpgCore\Main$1.class
 com\aquaMobs\rpgCore\staff\StatsCommand.class
 com\aquaMobs\rpgCore\ui\NumFormatter.class
 com\aquaMobs\rpgCore\misc\AutoFeed.class
+com\aquaMobs\rpgCore\classes\WarriorClass.class
 com\aquaMobs\rpgCore\items\recipes\RecipeUtil.class
 com\aquaMobs\rpgCore\farming\blocks\FarmingBlocks.class
 com\aquaMobs\rpgCore\foraging\CustomForagingUtil.class

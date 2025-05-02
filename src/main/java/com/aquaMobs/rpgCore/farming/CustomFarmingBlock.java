@@ -14,12 +14,14 @@ import org.bukkit.inventory.PlayerInventory;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 public class CustomFarmingBlock {
 
-    private final Material blockType;
-    private final String regionName;
+    private final List<Material> blockType;
+    private final List<String> regionName;
     private final String skillName;
     private final String itemRewarded;
     private final int skillXpAmountRewarded;
@@ -28,7 +30,7 @@ public class CustomFarmingBlock {
     private final int skillLevelRequired;
     private final int levelRequired;
 
-    public CustomFarmingBlock (Material blockType, String regionName, int levelRequired, int skillLevelRequired, String skillName, String itemRewarded, int skillXpAmountRewarded, int xpAmountRewarded, int itemAmountRewarded) {
+    public CustomFarmingBlock (List<Material> blockType, List<String> regionName, int levelRequired, int skillLevelRequired, String skillName, String itemRewarded, int skillXpAmountRewarded, int xpAmountRewarded, int itemAmountRewarded) {
         this.blockType = blockType;
         this.regionName = regionName;
         this.levelRequired = levelRequired;
@@ -46,10 +48,27 @@ public class CustomFarmingBlock {
 
         e.setCancelled(true);
 
-        if (!e.getBlock().getType().equals(this.blockType)) return;
-        if (!RegionUtil.getRegionsAt(e.getBlock().getLocation()).contains(this.regionName)) return;
+        Material actualBlockType = e.getBlock().getType();
+        Location blockLocation = e.getBlock().getLocation();
 
-        if (e.getPlayer().getLevel() < this.levelRequired) {
+        Block b = e.getBlock();
+
+        Player p = e.getPlayer();
+        PersistentDataContainer pdc = p.getPersistentDataContainer();
+
+        int skillLevel = pdc.getOrDefault(new NamespacedKey("aquamobs", this.skillName+"_"+"level"), PersistentDataType.INTEGER, 1);
+        int breakingPower = pdc.getOrDefault(new NamespacedKey("aquamobs", "breaking_power"), PersistentDataType.INTEGER, 0);
+        int miningSpeed = pdc.getOrDefault(new NamespacedKey("aquamobs", "mining_speed"), PersistentDataType.INTEGER, 0);
+
+        boolean blockIsCorrect = this.blockType.contains(actualBlockType);
+        boolean regionIsCorrect = !Collections.disjoint(this.regionName, RegionUtil.getRegionsAt(blockLocation));
+        boolean playerHasLevel = p.getLevel() >= this.levelRequired;
+        boolean playerHasSkillLevel = skillLevel >= this.skillLevelRequired;
+
+        if (!blockIsCorrect) return;
+        if (!regionIsCorrect) return;
+
+        if (!playerHasLevel) {
             e.getPlayer().sendMessage("You need to be level " + this.levelRequired + " to break this block.");
             return;
         }
@@ -60,13 +79,7 @@ public class CustomFarmingBlock {
             }
         }
 
-        Block b = e.getBlock();
-        Player p = e.getPlayer();
-        PersistentDataContainer pdc = p.getPersistentDataContainer();
-
-        int skillLevel = pdc.getOrDefault(new NamespacedKey("aquamobs", this.skillName + "_" + "level"), PersistentDataType.INTEGER, 1);
-
-        if (skillLevel < this.skillLevelRequired) {
+        if (!playerHasSkillLevel) {
             p.sendMessage("You need to be " + this.skillLevelRequired + " in " + this.skillName + " to break this block.");
             return;
         }
@@ -74,7 +87,6 @@ public class CustomFarmingBlock {
         PlayerInventory inv = p.getInventory();
 
         World world = b.getWorld();
-        Location blockLocation = b.getLocation();
 
         p.getAttribute(Attribute.BLOCK_BREAK_SPEED).setBaseValue(0.000001);
 
@@ -112,11 +124,11 @@ public class CustomFarmingBlock {
     }
 
 
-    public Material getType() {
+    public List<Material> getType() {
         return this.blockType;
     }
 
-    public String getRegionName() {
+    public List<String> getRegionName() {
         return this.regionName;
     }
 }

@@ -69,12 +69,12 @@ public class Sidebar implements Listener {
 
         board.updateLines(
             miniMessage.deserialize("<#96B0B3><strikethrough>                            <reset>"),
-            miniMessage.deserialize("<#AAAAAA>[" + formattedTime + "]"),
+            miniMessage.deserialize("<gray>[" + formattedTime + "]"),
             miniMessage.deserialize("<#000000> "),
             miniMessage.deserialize("<#8AE6E6><bold>" + p.getName()),
-            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <#1BAB21>$ <#23DE2B>" + balance + " <#1BAB21>ᴍᴏɴᴇʏ"),
-            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <#C4C03B>☆ <#EDE847>" + NumFormatter.format(xp) + "<#AAAAAA>/<#EDE847>" + NumFormatter.format(xpRequired) + " <#C4C03B>ᴇxᴘᴇʀɪᴇɴᴄᴇ"),
-            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <#00939E>★ <#00C5D3>" + NumFormatter.format(level) + " <#00939E>ʟᴇᴠᴇʟ")
+            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <dark_green>$ <green>" + balance + " <dark_green>ᴍᴏɴᴇʏ"),
+            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <gold>☆ <yellow>" + NumFormatter.format(xp) + "<gray>/<yellow>" + NumFormatter.format(xpRequired) + " <gold>ᴇxᴘᴇʀɪᴇɴᴄᴇ"),
+            miniMessage.deserialize("<#CCFFFF><bold>|<reset> <dark_aqua>★ <aqua>" + NumFormatter.format(level) + " <dark_aqua>ʟᴇᴠᴇʟ")
         );
     }
 

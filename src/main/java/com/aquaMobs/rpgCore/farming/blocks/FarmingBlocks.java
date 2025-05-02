@@ -8,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 public class FarmingBlocks implements Listener {
@@ -17,8 +18,8 @@ public class FarmingBlocks implements Listener {
     public static void registerBlocks() {
 
         blocks.add(new CustomFarmingBlock(
-                Material.WHEAT,
-                "farm",
+                List.of(Material.WHEAT),
+                List.of("farm", "spawn_farm"),
                 1,
                 1,
                 "farming",
@@ -29,8 +30,8 @@ public class FarmingBlocks implements Listener {
         ));
 
         blocks.add(new CustomFarmingBlock(
-                Material.CARROTS,
-                "farm",
+                List.of(Material.CARROTS),
+                List.of("farm", "spawn_farm"),
                 1,
                 1,
                 "farming",
@@ -44,7 +45,9 @@ public class FarmingBlocks implements Listener {
     @EventHandler
     public void onBreak(BlockBreakEvent e) {
         for (CustomFarmingBlock block : blocks) {
-            if (e.getBlock().getType() == block.getType() && RegionUtil.getRegionsAt(e.getBlock().getLocation()).contains(block.getRegionName())) {
+            boolean typeMatch = block.getType().contains(e.getBlock().getType());
+            boolean regionMatch = !Collections.disjoint(block.getRegionName(), RegionUtil.getRegionsAt(e.getBlock().getLocation()));
+            if (typeMatch && regionMatch) {
                 block.onBlockBreak(e);
                 return;
             }

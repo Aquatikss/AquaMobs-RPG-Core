@@ -2,6 +2,7 @@ package com.aquaMobs.rpgCore;
 
 import com.aquaMobs.rpgCore.areas.Portals;
 import com.aquaMobs.rpgCore.chat.ChatFormatting;
+import com.aquaMobs.rpgCore.classes.ClassSelectionMenu;
 import com.aquaMobs.rpgCore.farming.blocks.FarmingBlocks;
 import com.aquaMobs.rpgCore.foraging.CustomForagingUtil;
 import com.aquaMobs.rpgCore.foraging.blocks.ForagingBlocks;
@@ -72,6 +73,7 @@ public final class Main extends JavaPlugin {
         ForagingBlocks.registerBlocks();
 
         Bukkit.getPluginManager().registerEvents(new CustomForagingUtil(), this);
+        Bukkit.getPluginManager().registerEvents(new ClassSelectionMenu(), this);
         Bukkit.getPluginManager().registerEvents(new CustomMiningUtil(), this);
         Bukkit.getPluginManager().registerEvents(new MobRegistration(), this);
         Bukkit.getPluginManager().registerEvents(new ChatFormatting(), this);

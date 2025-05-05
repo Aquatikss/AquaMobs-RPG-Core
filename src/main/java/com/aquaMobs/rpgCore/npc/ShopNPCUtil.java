@@ -122,16 +122,16 @@ public class ShopNPCUtil implements Listener {
 
                         if (event.isLeftClick() && hasItem(inv, item, 1)) {
                             inv.removeItemAnySlot(item);
-                            whoClicked.sendMessage(miniMessage.deserialize("\uE018 <white>You sold 1x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(sellPrice) + "<white>!")));
+                            whoClicked.sendMessage(miniMessage.deserialize("\uE018 <green>You sold 1x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(sellPrice) + "<white>!")));
                             VaultHook.getEconomy().depositPlayer(whoClickedOffline, sellPrice);
                             whoClicked.playSound(confirmSound);
                         } else if (event.isRightClick() && hasItem(inv, item, 64)) {
                             inv.removeItemAnySlot(item.asQuantity(64));
-                            whoClicked.sendMessage(miniMessage.deserialize("\uE018 <white>You sold 64x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(sellPrice * 64) + "<white>!")));
+                            whoClicked.sendMessage(miniMessage.deserialize("\uE018 <green>You sold 64x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(sellPrice * 64) + "<white>!")));
                             VaultHook.getEconomy().depositPlayer(whoClickedOffline, sellPrice * 64);
                             whoClicked.playSound(confirmSound);
                         } else {
-                            whoClicked.sendMessage(miniMessage.deserialize("\uE017 <white>You don't have enough ").append(name).append(miniMessage.deserialize(" <white>to sell!")));
+                            whoClicked.sendMessage(miniMessage.deserialize("\uE017 <red>You don't have enough ").append(name).append(miniMessage.deserialize(" <red>to sell!")));
                             whoClicked.playSound(denySound);
                             whoClicked.closeInventory();
                         }
@@ -178,23 +178,23 @@ public class ShopNPCUtil implements Listener {
                         if (inv.firstEmpty() != -1) {
                             if (event.isLeftClick() && VaultHook.getEconomy().getBalance(e.getPlayer()) >= buyPrice) {
                                 VaultHook.getEconomy().withdrawPlayer(whoClickedOffline, buyPrice);
-                                whoClicked.sendMessage(miniMessage.deserialize("\uE018 <white>You bought 1x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(buyPrice) + "<white>!")));
+                                whoClicked.sendMessage(miniMessage.deserialize("\uE018 <green>You bought 1x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(buyPrice) + "<white>!")));
                                 inv.addItem(item.asQuantity(1));
                                 whoClicked.playSound(confirmSound);
                             } else if (event.isRightClick() && VaultHook.getEconomy().getBalance(e.getPlayer()) >= buyPrice * 64) {
                                 VaultHook.getEconomy().withdrawPlayer(whoClickedOffline, buyPrice * 64);
-                                whoClicked.sendMessage(miniMessage.deserialize("\uE018 <white>You bought 64x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(buyPrice * 64) + "<white>!")));
+                                whoClicked.sendMessage(miniMessage.deserialize("\uE018 <green>You bought 64x ").append(name).append(miniMessage.deserialize(" for <gold>$" + NumFormatter.formatCommas(buyPrice * 64) + "<white>!")));
                                 inv.addItem(item.asQuantity(64));
                                 whoClicked.playSound(confirmSound);
                             } else {
                                 whoClicked.closeInventory();
                                 whoClicked.playSound(denySound);
-                                whoClicked.sendMessage(miniMessage.deserialize("\uE017 <white>You don't have enough <gold>$ Money <white>to buy ").append(name).append(miniMessage.deserialize("<white>!")));
+                                whoClicked.sendMessage(miniMessage.deserialize("\uE017 <red>You don't have enough <gold>$ Money <red>to buy ").append(name).append(miniMessage.deserialize("<red>!")));
                             }
                         } else {
                             whoClicked.closeInventory();
                             whoClicked.playSound(denySound);
-                            whoClicked.sendMessage(miniMessage.deserialize("\uE017 <white>Your inventory is full!"));
+                            whoClicked.sendMessage(miniMessage.deserialize("\uE017 <red>Your inventory is full!"));
                         }
                     });
 

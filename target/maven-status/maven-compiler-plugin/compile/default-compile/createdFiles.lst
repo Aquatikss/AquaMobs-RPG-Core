@@ -43,6 +43,7 @@ com\aquaMobs\rpgCore\staff\StatsCommand.class
 com\aquaMobs\rpgCore\ui\NumFormatter.class
 com\aquaMobs\rpgCore\misc\AutoFeed.class
 com\aquaMobs\rpgCore\classes\WarriorClass.class
+com\aquaMobs\rpgCore\classes\ArcherClass.class
 com\aquaMobs\rpgCore\items\recipes\RecipeUtil.class
 com\aquaMobs\rpgCore\farming\blocks\FarmingBlocks.class
 com\aquaMobs\rpgCore\foraging\CustomForagingUtil.class

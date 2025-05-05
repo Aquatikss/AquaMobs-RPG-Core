@@ -22,6 +22,7 @@ public class WarriorClass {
         MiniMessage miniMessage = MiniMessage.miniMessage();
 
         Sound clickSound = Sound.sound(Key.key("ui.button.click"), Sound.Source.MASTER, 1f, 1f);
+        Sound denySound = Sound.sound(Key.key("block.note_block.bass"), Sound.Source.MASTER, 100f, 0f);
         Sound classSelectSound = Sound.sound(Key.key("entity.firework_rocket.twinkle_far"), Sound.Source.MASTER, 0.5f, 1f);
 
         Gui gui = Gui.gui()
@@ -88,8 +89,15 @@ public class WarriorClass {
                         miniMessage.deserialize("<!italic><red>Requires <dark_aqua>★ <aqua>Level 50 <red>to unlock!")
                 )
                 .asGuiItem(event -> {
+                    int level = p.getPersistentDataContainer().getOrDefault(new NamespacedKey("aquamobs", "level"), PersistentDataType.INTEGER, 1);
+                    if (level < 50) {
+                        p.sendMessage(miniMessage.deserialize("<!italic><white>\uE017 <red>You need to be <dark_aqua>★ <aqua>Level 50 <red>to unlock this class!"));
+                        p.playSound(denySound);
+                        return;
+                    }
                     p.playSound(classSelectSound);
                     p.getPersistentDataContainer().set(new NamespacedKey("aquamobs", "class"), PersistentDataType.STRING, "assassin");
+                    p.getPersistentDataContainer().set(new NamespacedKey("aquamobs", "class_"), PersistentDataType.INTEGER, 1);
                     p.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize("<aqua>You have selected a class!"));
                     p.sendTitlePart(TitlePart.SUBTITLE, miniMessage.deserialize("<gray>You are now a <yellow>\uD83D\uDDE1 Warrior-Assassin<gray>!"));
                     p.closeInventory();
@@ -118,9 +126,15 @@ public class WarriorClass {
                         miniMessage.deserialize("<!italic><gold> \uE014 <gray>of your <green>\uD83D\uDEE1 <gray>Defense consumed will be subtracted from your"),
                         miniMessage.deserialize("<!italic><gold> \uE015 <yellow>⚡ <gray>Speed for 5 seconds."),
                         miniMessage.deserialize(" "),
-                        miniMessage.deserialize("<!italic><gold> \uE014 <red>Requires <dark_aqua>★ <aqua>Level 250 <red>to unlock!")
+                        miniMessage.deserialize("<!italic><red>Requires <dark_aqua>★ <aqua>Level 250 <red>to unlock!")
                 )
                 .asGuiItem(event -> {
+                    int level = p.getPersistentDataContainer().getOrDefault(new NamespacedKey("aquamobs", "level"), PersistentDataType.INTEGER, 1);
+                    if (level < 250) {
+                        p.sendMessage(miniMessage.deserialize("<!italic><white>\uE017 <red>You need to be <dark_aqua>★ <aqua>Level 250 <red>to unlock this class!"));
+                        p.playSound(denySound);
+                        return;
+                    }
                     p.playSound(classSelectSound);
                     p.getPersistentDataContainer().set(new NamespacedKey("aquamobs", "class"), PersistentDataType.STRING, "warlord");
                     p.sendTitlePart(TitlePart.TITLE, miniMessage.deserialize("<aqua>You have selected a class!"));
